@@ -36,6 +36,8 @@ D:\Program Files\miniconda3\share\jupyter\nbconvert\templates\latex\index.tex.j2
 
 把 `block doclass`下的 `article` 改成 `ctexart`：
 
+> Miktex基本包自带ctexart，无需额外安装
+
 ```jinja2
 ((*- block docclass -*))
 \documentclass[11pt]{ctexart}
