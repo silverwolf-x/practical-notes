@@ -86,14 +86,14 @@ rmd一图流简介https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbo
 
 - 全局设置
 
-````{r,include=FALSE}
+~~~markdown
 ```{r,include=FALSE}
 # include=FALSE：rmd编译时会运行但不显示代码和结果
 # 让knitr编译时可以编译重复的代码块名，否则容易报错
 options(knitr.duplicate.label = "allow")
 knitr::opts_chunk$set(fig.path = "Figs/", echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
-````
+~~~
 
 - `knit::kable()`用于显示数据框。
     knitr::kable(d1)
@@ -214,4 +214,4 @@ tinytex::is_tinytex()
 
 运行MikTex Console：
 
-![MikTex Console修改后界面](/assets/image-20231223220301528.png)
+[MikTex Console修改后界面](<assets/rmd使用指南-MikTex Console修改后界面.png>)
