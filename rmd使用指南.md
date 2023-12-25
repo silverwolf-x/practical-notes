@@ -41,7 +41,7 @@ install.packages("rticles")
 documentclass: ctexart
 geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm" # 更改全文页边距
 output:
-	pdf_document: 
+    pdf_document:
     # rticles::ctex:  # 其实和pdf_document没什么区别
         fig_caption: yes  # 表示图上的注释保留
         keep_tex: yes   
