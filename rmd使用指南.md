@@ -188,7 +188,7 @@ tinytex::install_tinytex()
 tinytex::is_tinytex()
 ```
 
-安装好tinytex编译程序后，`tinytex::is_tinytex()`返回True。如果没有tinytex编译器（例如你使用MikTex)，则False
+安装好tinytex编译程序后，`tinytex::is_tinytex()`返回True。如果没有tinytex编译器（例如你使用MikTex），则False
 
 详见https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/rmarkdown.html#rmd-latex-tinytex
 
@@ -214,4 +214,4 @@ tinytex::is_tinytex()
 
 运行MikTex Console：
 
-![img](image-20231223220301528.png)
+![MikTex Console修改后界面](/assets/image-20231223220301528.png)
