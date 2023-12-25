@@ -200,7 +200,9 @@ tinytex::is_tinytex()
 
 缺点：约800MB
 
-安装地址：https://miktex.org/download，具体问题（中文显示等）可见本人GitHub	[vscode-jupyter使用.md ](https://github.com/Silverwolf-x/practical-notes/blob/master/vscode-jupyter使用.md)
+安装地址：https://miktex.org/download
+
+具体问题（中文显示等）可见本人GitHub	[vscode-jupyter使用.md](https://github.com/Silverwolf-x/practical-notes/blob/master/vscode-jupyter使用.md)
 
 
 
@@ -210,5 +212,6 @@ tinytex::is_tinytex()
   关闭vscode，按WIN + R，输入cmd，打开终端，然后输入命令code --no-sandbox
 -  使用MikTex时，`xletex.log`报错**FATAL xelatex.core - GUI framework cannot be initialized.**
 
-运行MikTex Console：![image-20231223220301528](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20231223220301528.png)
+运行MikTex Console：
 
+![img](image-20231223220301528.png)
