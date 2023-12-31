@@ -1,3 +1,18 @@
+# r语言初次安装的包
+设置清华源https://mirrors.tuna.tsinghua.edu.cn/help/CRAN/
+
+```
+options("repos" = c(CRAN = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))
+```
+
+
+```R
+install.packages(c("languageserver","ggplot2")) # 一般的包
+install.packages(c("rmarkdown","knitr","tinytex")) # rmd
+# 可选
+install.packages("rmdformats") # 可选rmdformat有好看的html
+```
+
 # vscode中使用rmarkdown
 
 设置清华源
@@ -12,50 +27,47 @@ options()$repos  ## 查看使用install.packages安装时的默认镜像
 
 # 1. yaml导出设置
 
+相关学习[第 2 章 R Markdown 的基础知识 | R Markdown 指南 (cosname.github.io)](https://cosname.github.io/rmarkdown-guide/rmarkdown-base.html#yaml)
+
 ## 基本开头
 
 ```yaml
 title:  研究型学习1
 subtitle: 精算模型
-author: 何雨轩
+author:
+  - 何雨轩2021201710
 time:  '`r format(Sys.Date(), "%B %d, %Y")`'
 ```
+
+author下的affiliation（联系）在html能显示，但在pdf输出失效
 
 ## pdf导出设置
 
 需要相关支持，详见后面的下载配置章节
-
-- （可选）R语言需要安装`rticles`包，这个包中有Ctex相关功能，所以可以实现中文的输出
-
-```
-install.packages("rticles")
-```
-
->  使用rticles::ctex:时不能在文件名出现如下字符
->
-> **Error: The name of the input file cannot contain the special shell characters: [ <>()|\:&;#?*']** 
-
-
 
 ```yaml
 documentclass: ctexart
 geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm" # 更改全文页边距
 output:
     pdf_document:
-    # rticles::ctex:  # 其实和pdf_document没什么区别
-        fig_caption: yes  # 表示图上的注释保留
-        keep_tex: yes   
-        latex_engine: xelatex # xelatex能编译utf8
-        # toc: true
+        fig_caption: true  # 表示图上的注释保留
+        keep_tex: true   # 保存中间.tex文档
+        df_print: kable  # 数据框输出表格样式
+        latex_engine: xelatex # xelatex能编译utf8显示中文
+        toc: true
         toc_depth: 2
         # number_sections: true  # 表示每一节的数字保留
 ```
 
+不过latex编译代码块不会自动换行，这点需要注意
+
 ## html导出设置
 
-```
+```yaml
 output:
   html_document:
+  	keep_md: false
+  	df_print: kable
     toc: true
     toc_float:
       collapsed: false
@@ -64,7 +76,7 @@ output:
 
 - （可选）使用`rmdformats`包
 
-```
+```yaml
 output:
   rmdformats::readthedown:
     self_contained: true
@@ -72,6 +84,7 @@ output:
     lightbox: true
     gallery: false
     highlight: tango
+    df_print: kable
 ```
 
 ![img](https://img2020.cnblogs.com/blog/1373034/202104/1373034-20210425091256095-56360833.png)
@@ -86,12 +99,13 @@ rmd一图流简介https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbo
 
 - 全局设置
 
-~~~markdown
+~~~R
 ```{r,include=FALSE}
-# include=FALSE：rmd编译时会运行但不显示代码和结果
+# install.packages()
 # 让knitr编译时可以编译重复的代码块名，否则容易报错
 options(knitr.duplicate.label = "allow")
-knitr::opts_chunk$set(fig.path = "Figs/", echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+knitr::opts_chunk$set(fig.path = "Figs/",out.width="45%",fig.align='center')
 ```
 ~~~
 
