@@ -29,6 +29,8 @@ options()$repos  ## 查看使用install.packages安装时的默认镜像
 
 相关学习[第 2 章 R Markdown 的基础知识 | R Markdown 指南 (cosname.github.io)](https://cosname.github.io/rmarkdown-guide/rmarkdown-base.html#yaml)
 
+[R沟通｜Rmarkdown(5)一些常用技巧 - 知乎](file:///C:/Users/Administrator/Desktop/R沟通｜Rmarkdown(5)一些常用技巧 - 知乎.mhtml)
+
 ## 基本开头
 
 ```yaml
@@ -229,3 +231,12 @@ tinytex::is_tinytex()
 运行MikTex Console：
 
 [MikTex Console修改后界面](<assets/rmd使用指南-MikTex Console修改后界面.png>)
+
+## 5. 
+
+查看默认路径
+
+```
+getwd()
+```
+

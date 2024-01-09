@@ -24,6 +24,19 @@ git tag -d {标签名}
 git push origin :refs/tags/{标签名}
 ```
 
+- **git 本地tag和远程tag对应不上 vscode里pull不下代码**
+
+```cmd
+git ls-remote -t # 查看远程tags                 
+git tag -l  # 查看本地tag
+git tag -d xxx # 删除本地tag
+git fetch origin --prune-tags # 最后远程拉取远程tags   
+ git push origin --delete tag 标签名  # 删除远程tags
+```
+
+- vscode按按钮同步tag
+- [VSCode配置git push --tags_vscode push tag-CSDN博客](https://blog.csdn.net/u010214511/article/details/127030248)
+
 ## git lfs使用和删除
 
 [github大文件上传：使用LFS （以及如何将lfs从仓库中移除！）_github lfs-CSDN博客](https://blog.csdn.net/weixin_39278265/article/details/121103819)
