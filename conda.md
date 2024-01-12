@@ -11,16 +11,19 @@ conda config --set auto_activate_base false	# 默认不进入base环境
 conda config --set auto_activate_base true	# 默认进入base环境
 
 创建环境dev
-conda create -n dev python=3.10
-# 默认3.10最新版本
-conda create -n dev python==3.10
-# 安装3.10.0版本
-conda create -p ./myenv  python=3.10
-# 在指定目录下执行以下命令
+
+```
+conda create -n dev python=3.10# 默认3.10最新版本
+conda create -n dev python==3.10# 安装3.10.0版本
+conda create -p ./myenv  python=3.10 # 在指定目录下执行以下命令
+```
+
+
+
+
 
 清除环境
-conda remove -n dev --all 
-# 彻底删除要到文件夹下删除envs/dev
+conda remove -n dev --all # 彻底删除要到文件夹下删除envs/dev
 
 查看环境
 conda env list
