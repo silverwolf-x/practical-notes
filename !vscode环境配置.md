@@ -1,0 +1,296 @@
+[TOC]
+
+# vscode 环境配置
+
+只介绍配置，不详细介绍具体使用习惯与技巧。
+
+关注命令的相关配置，即使用`python --help`、 `pandoc --help`
+
+# python：`miniconda`
+
+## 安装与切换默认环境不是base
+
+https://blog.csdn.net/Inochigohan/article/details/120400990
+
+- 安装在`Program Files`。虽然程序推荐安装在`ProgramData`目录下，但是这样配置完成后powershell加载conda环境时会弹出黑框运行shell文件。而安装在`Program Files`下时则不会弹出，静默运行
+- 配置系统环境
+
+高级系统变量--Path
+
+```
+D:\Program Files\miniconda3    
+D:\Program Files\miniconda3\Scripts   
+D:\Program Files\miniconda3\Library\bin
+```
+- 打开任意python文件，选择编译器运行
+- 终端提示输入`conda init`
+
+- 创建虚拟环境，并切换为默认环境，以方便删除与管理
+
+```
+conda create -n envbase python=3.10
+```
+
+- vscode的python插件设置中，设置默认python path为`D:\Program Files\miniconda3\envs\envbase\python.exe`
+
+## 重置虚拟环境
+
+即删除所有安装过的包
+
+```
+pip freeze > requirements.txt
+pip uninstall -r requirements.txt -y
+```
+
+
+
+## conda命令
+
+切换清华大学源
+
+```
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+```
+
+(先把所有工具包进行升级)
+
+```
+conda upgrade --all
+```
+
+创建虚拟环境
+
+```
+conda create -n dev python=3.10 -y # 默认3.10最新版本，并默认yes
+conda create -n dev python==3.10# 安装3.10.0版本
+conda create -p ./myenv  python=3.10 # 在指定目录下执行以下命令
+```
+
+切换环境
+
+```
+conda activate dev
+conda deactivate
+```
+
+清除环境
+
+```
+conda remove -n dev --all # 彻底删除要到文件夹下删除envs/dev
+```
+
+清理缓存
+
+```
+conda clean -y --all 
+```
+
+查看所有虚拟环境
+
+```
+conda env list
+```
+
+### base环境相关
+
+```
+conda config --set auto_activate_base false	# 默认不进入base环境
+conda config --set auto_activate_base true	# 默认进入base环境
+```
+
+清除base安装的所有包
+
+[python - conda: remove all installed packages from base/root environment - Stack Overflow](https://stackoverflow.com/questions/52830307/conda-remove-all-installed-packages-from-base-root-environment)
+
+```
+conda list --revisions
+```
+
+
+
+## python-jupyter
+
+编译jupyter需要`ipykernel`，导出html和py需要`notebook`
+
+```powershell
+pip install ipykernel notebook
+```
+
+## 常用包安装
+
+
+
+## 使用习惯
+
+- 一般安装照常用pip install
+
+- 右键`用code打开`文件夹作为工作区，点击任意python文件，将vscode右下角切换为conda的python虚拟环境。这样使用任意终端时，vscode会自动使用这个python环境
+
+    > powershell 脚本中，需要将`python3`命令全部替换为`python`
+
+# `Pandoc`
+
+- `rmd`和`python-jupyter`编译html时需要pandoc转换，`Typora`编译也需要
+
+# latex：`MiKTex`
+
+- 导出pdf需要通过LaTex
+
+优点：官方推荐之一，能被tex编译软件调用；相较于全量的Texlive，MikTex只安装所需要的包，之后可以按照需求添加；管理页面好看
+
+缺点：约800MB
+
+安装地址：https://miktex.org/download
+
+> Texlive包比较全但占用空间大，Miktex占用空间小（基础约800MB），需要的包可在线下载，且管理界面美观
+
+首次在导出pdf过程中，会自动安装一些依赖包，根据提示点击安装即可
+
+## 中文显示问题
+
+修改python安装路径下的一个文件
+
+```
+D:\Program Files\miniconda3\share\jupyter\nbconvert\templates\latex\index.tex.j2
+```
+
+- **基本解决思路**
+
+把 `block doclass`下的 `article` 改成 `ctexart`：
+
+> Miktex基本包自带ctexart，无需额外安装
+
+```jinja2
+((*- block docclass -*))
+\documentclass[11pt]{ctexart}
+((*- endblock docclass -*))
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/651704c696924e70b4ffbdee402e1d14.png)
+
+这样H1标题会居中，H2及之后会靠左
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8324e4139e1b44a4b2578d8a57faa687.png)
+
+- **H1标题居中调整**
+
+在`index.tex.j2`文件中增加如下命令
+
+```
+\CTEXsetup[format={\Large\bfseries}]{section}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2fcdc224ab9d4c90980a082210548ff2.png)
+
+##  使用MikTex时，`xletex.log`报错**FATAL xelatex.core - GUI framework cannot be initialized.**
+
+运行MikTex Console：[MikTex Console修改后界面](<assets/rmd使用指南-MikTex Console修改后界面.png>)
+
+# R
+
+参考[如何在 VSCODE 中高效使用 R 语言 （图文详解）_vscode运行r语言-CSDN博客](https://blog.csdn.net/u011262253/article/details/113837720)
+
+## vscode及python前置设置
+
+- 直接下载vscode的R扩展
+
+- python安装`radian`
+
+    ```
+    pip install radian
+    ```
+
+- 在系统powershell中寻找`radian`路径
+
+    ```
+    where radian
+    ```
+
+"ctrl"+", " 进入配置，打开配置的 json 文件
+
+```
+    "r.lsp.debug": true,
+    "r.rterm.windows": "D:\\Program Files\\Python311\\Scripts\\radian.exe",# python radian包位置
+    "r.bracketedPaste": true,
+    "r.rterm.option": [
+        // "--no-save",
+        // "--no-restore",
+        "--no-site-file"
+    ],
+```
+
+- (可选)r.sessionWatcher
+
+    可以实现绘图IDE，查看dataframe。如果想用原生绘图，取消勾选即可
+
+## 基本配置
+
+设置清华源
+
+```
+options("repos" = c(CRAN = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))
+options()$repos  ## 查看使用install.packages安装时的默认镜像
+```
+
+基本安装
+
+```R
+install.packages(c("languageserver","ggplot2")) # 一般的包
+install.packages(c("rmarkdown","knitr","tinytex")) # rmd相关
+# 可选
+install.packages("rmdformats") # 可选rmdformat有好看的html
+```
+
+## Pandoc与Latex
+
+- 环境配置见上文
+
+> tinytex是rmd使用knit生成pdf必须的包
+
+- 验证Pandoc能被R调用
+
+    ```
+    rmarkdown::pandoc_available() # rmarkdown能识别pandoc时返回True
+    ```
+
+- tinytex相关
+
+> 优点：安装包极小，约123MB
+>
+> 缺点：难以（或者无法）在其它软件编译latex时（如typora，jupyter）调用
+>
+> ```R
+> tinytex::install_tinytex()
+> tinytex::is_tinytex()
+> ```
+>
+> 安装好tinytex编译程序后，`tinytex::is_tinytex()`返回True。如果没有tinytex编译器（例如使用MikTex），则False
+>
+> 详见https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/rmarkdown.html#rmd-latex-tinytex
+
+**不推荐既安装tinytex编译器又安装MikTex编译器，防止两个Tex编译冲突**
+
+## 常见报错
+
+- vscode加载web 视图，报错:“Error: Could not register serviceworkers: InvalidstateError: Failed to regist“
+    关闭vscode，按WIN + R，输入cmd，打开终端，然后输入命令code --no-sandbox
+
+## shell
+
+>  借助git的bash，见shell.exe放入环境变量
+>
+> ![](https://img-blog.csdnimg.cn/20190406155849491.png)
+
+右键点击桌面上的“此电脑”，“属性”，“高级系统设置”，“高级”，“环境变量“，在“系统变量”中的Path增加bin的文件夹的路径，如“D:\Git\bin”即可。之后重启vscode确保环境变量刷新
+
+- powershell测试
+
+    ```powershell
+    sh --help
+    ```
+
+# wget
+
+[wget 的安装与使用（Windows）_windows wget-CSDN博客](https://blog.csdn.net/m0_45447650/article/details/125786723)
