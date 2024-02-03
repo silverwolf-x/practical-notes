@@ -12,6 +12,14 @@
 
 https://blog.csdn.net/Inochigohan/article/details/120400990
 
+> 配置文件为C:\Users\Administrator\.condarc
+>
+> 查看设置
+>
+> ```
+> conda config --show
+> ```
+
 - 安装在`Program Files`。虽然程序推荐安装在`ProgramData`目录下，但是这样配置完成后powershell加载conda环境时会弹出黑框运行shell文件。而安装在`Program Files`下时则不会弹出，静默运行
 - 配置系统环境
 
@@ -38,11 +46,9 @@ conda create -n envbase python=3.10
 即删除所有安装过的包
 
 ```
-pip freeze > requirements.txt
-pip uninstall -r requirements.txt -y
+pip freeze > all.txt 
+pip uninstall -r all.txt -y
 ```
-
-
 
 ## conda命令
 
@@ -75,6 +81,14 @@ conda activate dev
 conda deactivate
 ```
 
+重命名
+
+```
+conda create -n tf --clone rcnn #把环境 rcnn 重命名成 tf
+conda remove -n rcnn --all 
+#conda 其实没有重命名指令，实现重命名是通过 clone 完成的，分两步：1.先 clone 一份 new name 的环境。2.删除 old name 的环境。
+```
+
 清除环境
 
 ```
@@ -91,6 +105,12 @@ conda clean -y --all
 
 ```
 conda env list
+```
+
+**清除pip下载包缓存**
+
+```
+pip cache purge
 ```
 
 ### base环境相关
@@ -115,12 +135,16 @@ conda list --revisions
 编译jupyter需要`ipykernel`，导出html和py需要`notebook`
 
 ```powershell
-pip install ipykernel notebook
+pip install ipykernel notebook ipywidgets
 ```
 
 ## 常用包安装
 
-
+```
+# torch在pytorch官网中下载cuda版本
+pip install tqdm numpy pandas matplotlib scikit-learn seaborn 
+pip install transformers
+```
 
 ## 使用习惯
 
