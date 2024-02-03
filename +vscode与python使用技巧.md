@@ -78,3 +78,52 @@ Code-首选项-用户代码片段-选择代码块作用域的文件类型
 如果需要自定义代码块含有\$，则需要`\\$`
 
 辅助工具：[自动生成代码块工具网站](https://snippet-generator.app/)
+
+## opencv配置
+
+背景：
+
+- 需要`import cv2`的python脚本
+
+- `requirements.txt`中，需要安装opencv-python。但类似pytorch，这是cpu版本。cuda版本按照官方说法需要自行编译
+
+解决：[在windows环境下安装支持CUDA的opencv-python_使用 cuda 重新安装 opencv-CSDN博客](https://blog.csdn.net/shinuone/article/details/131435093)
+
+参考[opencv-python 库使用 cuda 加速 | Triority's blog](https://www.triority.cn/2023/opencv-python-cuda/)
+
+0. 先不急着开设conda虚拟环境
+
+1. 下载网上大佬预编译好的文件。[OpenCV Windows shared libraries](https://github.com/cudawarped/opencv_contrib/releases)中的最新即可。
+
+    > `opencv_contrib_cuda_4.9.0_win_amd64.7z`已经存档到百度网盘中
+
+    - 解压到合适的位置，将路径 `install\x64\vc16\bin`设置为windows系统环境变量
+
+    - 打开`python3\Debug`，将这里的所有3个文件复制到python包文件夹中。以虚拟环境opencv为例，地址为`D:\Program Files\miniconda3\envs\opencv\Lib\site-packages`。直接复制到这下面即可。
+
+2. 观察到所支持的python版本，如`cv2.cp39-win_amd64.pyd`表示支持python3.9。**此时才建python虚拟环境**。如果之前已经建好，可以参照下文更换python版本及重装所有包。
+
+    ```
+    conda install python=3.9 -y
+    pip freeze | ForEach-Object { ($_ -split '=')[0] } > all.txt
+    pip uninstall -r all.txt -y
+    pip install -r all.txt
+    ```
+
+3. 在conda中安装cuda-toolkit和cudnn环境，使用nvidia渠道保证最新版本（记得要看显卡驱动是否支持这个版本CUDA）
+
+    ```
+    conda install cuda-toolkit cudnn -c nvidia
+    conda uninstall cuda-toolkit cudnn -y
+    ```
+
+    > 否则使用时会报错`ImportError: DLL load failed while importing cv2: 找不到指定的模块。 `
+
+4. 卸载之前安装的cpu版本opencv，以免调用冲突
+
+    ```
+    pip uninstall opencv-python uninstall
+    ```
+
+    
+
