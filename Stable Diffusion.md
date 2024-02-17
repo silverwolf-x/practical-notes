@@ -27,6 +27,14 @@
 
 ![img](https://i0.hdslb.com/bfs/article/watermark/1a8d7575cb0ab7e429bdd678d32fb222e5d129cb.png@1256w_1222h_!web-article-pic.webp)
 
+**sd-webui-prompt-all-in-one**
+
+如果你想备份你的数据，可以将 `storage` 目录复制到其他地方，然后在需要的时候将其复制回来
+
+**记得移outputs**!!!!
+
+还有controlnet模型
+
 ## webui设置
 
 **记得操作后保存设置+重载UI**
@@ -44,3 +52,56 @@
 图生图中，controlnet模型选用control_v11p_sd15_openpose_fp16 [73c2b67d]，预处理器"无"
 
 [【AI绘画】人设自由！人设三视图一键生成 ControlNet实战教程 Stable Diffusion_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1gk4y1h7xF/)
+
+## 可能的错误
+
+### 1
+
+[stable diffusion更新到1.6.0后wd14-tagger插件报错的解决方案 - 哔哩哔哩 (bilibili.com)](https://www.bilibili.com/read/cv27758222/)
+
+> 'modules.shared' (most likely due to a circular import) (E:\sd-webui-aki-v4.3\modules\shared.py)
+
+tagger\ui.py
+
+```
+# from webui import wrap_gradio_gpu_call
+from modules.call_queue import wrap_gradio_gpu_call
+```
+
+preload.py
+
+```
+# from modules.shared import models_path
+from modules import paths
+
+# default_ddp_path = Path(models_path, 'deepdanbooru')
+default_ddp_path = Path(paths.models_path, 'deepdanbooru')
+```
+
+### 2
+
+> winFileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'D:\\sd-webui-aki-v4.6.1\\localizations'
+
+切换sd版本试一下，之后会下载一些组件。最后切换为最新版本即可
+
+
+
+### 3 显存不够？
+
+实测：用xformers flash attention，可以用heartOfAppleXL_v20模型，画1024*1024的图。有点刚刚够可能不要太多promote?
+
+ torch: 2.1.2+cu118  •  xformers: 0.0.23.post1+cu118  
+
+
+
+### 4 下载速度
+
+有时候，用全局模式t能接管某些包的下载速度（从500k上升到3M不等的速度），再不行就用tun模式，即使已经设置了代理。
+
+如果出现网速问题或者sha码报错，切换节点再试即可
+
+### 5 fp8
+
+[Kohaku-XL gamma - rev2 | Stable Diffusion Checkpoint | Civitai](https://civitai.com/models/270291/kohaku-xl-gamma)
+
+需要在requirements_versions.txt中，更改requirements_versions.txt，否则会重装
