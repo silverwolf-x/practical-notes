@@ -36,7 +36,7 @@ D:\Program Files\miniconda3\Library\bin
 - 创建虚拟环境，并切换为默认环境，以方便删除与管理
 
 ```
-conda create -n envbase python=3.10
+conda create -n envbase python=3.11 -y
 ```
 
 - vscode的python插件设置中，设置默认python path为`D:\Program Files\miniconda3\envs\envbase\python.exe`
@@ -128,17 +128,13 @@ conda config --set auto_activate_base true	# 默认进入base环境
 conda list --revisions
 ```
 
-
-
-## python-jupyter
+## 常用包安装
 
 编译jupyter需要`ipykernel`，导出html和py需要`notebook`
 
 ```powershell
 pip install ipykernel notebook ipywidgets
 ```
-
-## 常用包安装
 
 ```
 # torch在pytorch官网中下载cuda版本
@@ -152,7 +148,16 @@ pip install transformers
 
 - 右键`用code打开`文件夹作为工作区，点击任意python文件，将vscode右下角切换为conda的python虚拟环境。这样使用任意终端时，vscode会自动使用这个python环境
 
-    > powershell 脚本中，需要将`python3`命令全部替换为`python`
+
+> powershell 脚本中，需要将`python3`命令全部替换为`python`
+
+### 代码格式化
+
+[Formatting Python in Visual Studio Code](https://code.visualstudio.com/docs/python/formatting)
+
+现在已经弃用原本的方法[VSCode最新格式化Python文件的方法_vscode python 格式化-CSDN博客](https://blog.csdn.net/StephanieXYM/article/details/133767499)，需要插件形式格式化
+
+各格式化对比：[python格式化代码只懂autopep8？这里有更好的 - 简书 (jianshu.com)](https://www.jianshu.com/p/dc9d66d357bb)
 
 # `Pandoc`
 
@@ -171,6 +176,22 @@ pip install transformers
 > Texlive包比较全但占用空间大，Miktex占用空间小（基础约800MB），需要的包可在线下载，且管理界面美观
 
 首次在导出pdf过程中，会自动安装一些依赖包，根据提示点击安装即可
+
+## vscode-latexworkshop
+
+安装perl：[配置 VSCode 下 LaTex 环境 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/379264127)
+
+配置json：vscode配置latexmk[在 VSCode 的 LaTeXworkshop 插件中使用 LaTeXmk | 始终 (liam.page)](https://liam.page/2020/04/24/using-LaTeXmk-with-LaTeXworkshop-with-VSCode/)
+
+编译后自动清理多余文件：[vscode 配置 Latex 编译后自动清理多余文件(.log .out等文件)_latex运行一次就自动日志文件-CSDN博客](https://blog.csdn.net/weixin_35757704/article/details/90597405)
+
+## tex使用
+
+精华文档[lec4.pdf (tonycrane.cc)](https://slides.tonycrane.cc/PracticalSkillsTutorial/2023-fall-ckc/lec4/lec4.pdf)
+
+**推荐使用 latexmk，自动选择编译指令**
+
+
 
 ## 中文显示问题
 

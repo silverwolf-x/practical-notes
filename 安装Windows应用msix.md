@@ -30,3 +30,7 @@ add-appxpackage .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 ```
 Add-AppxPackage -Path "C:\Path\to\File.Appx"
 ```
+
+## 注
+
+安装EarTrumpet后，通过开始菜单打开软件，然后进行设置就能正常显示了

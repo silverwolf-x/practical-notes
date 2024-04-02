@@ -105,3 +105,19 @@ default_ddp_path = Path(paths.models_path, 'deepdanbooru')
 [Kohaku-XL gamma - rev2 | Stable Diffusion Checkpoint | Civitai](https://civitai.com/models/270291/kohaku-xl-gamma)
 
 需要在requirements_versions.txt中，更改requirements_versions.txt，否则会重装
+
+## 管理pip包
+
+在`python.exe`同文件夹下，
+
+```
+python -m pip install --upgrade pip
+```
+
+之后
+
+```
+cd Script
+pip list
+```
+
