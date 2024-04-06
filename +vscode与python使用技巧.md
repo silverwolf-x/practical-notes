@@ -127,3 +127,10 @@ Code-首选项-用户代码片段-选择代码块作用域的文件类型
 
     
 
+## 粘性滚动
+
+```
+editor.experimental.stickyScroll.enabled
+```
+
+![img](https://img-blog.csdnimg.cn/1ba30bfa12374d809b6785d4b928298d.png)

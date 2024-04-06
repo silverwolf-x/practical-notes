@@ -108,6 +108,14 @@ default_ddp_path = Path(paths.models_path, 'deepdanbooru')
 
 ## 管理pip包
 
+- 正确方式
+
+```
+python.exe -m pip list
+```
+
+- 另一种方式：
+
 在`python.exe`同文件夹下，
 
 ```
@@ -117,7 +125,7 @@ python -m pip install --upgrade pip
 之后
 
 ```
-cd Script
+cd Scripts
 pip list
 ```
 
