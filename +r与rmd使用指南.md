@@ -1,5 +1,9 @@
 # vscode中使用rmarkdown
 
+重要！！！一文通
+
+[rmarkdown :: Cheatsheet (rstudio.github.io)](https://rstudio.github.io/cheatsheets/html/rmarkdown.html)
+
 # 1. yaml导出设置
 
 相关学习[第 2 章 R Markdown 的基础知识 | R Markdown 指南 (cosname.github.io)](https://cosname.github.io/rmarkdown-guide/rmarkdown-base.html#yaml)
@@ -38,33 +42,83 @@ output:
 
 不过latex编译代码块不会自动换行，这点需要注意
 
-## html导出设置
+## html导出设置第2版
 
-```yaml
-output:
-  html_document:
-  	keep_md: false
-  	df_print: kable
-    toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
+**原生就是最好的**
+
+一波详细设置，所有参数见[Convert to an HTML document — html_document • rmarkdown (rstudio.com)](https://rmarkdown.rstudio.com/docs/reference/html_document.html)
+
+问题：渲染时引用问题太大[Font size in blockquotes is too large · Issue #3901 · rstudio/rstudio (github.com)](https://github.com/rstudio/rstudio/issues/3901)
+
+**math_method**
+
+​	"default" for `mathjax`
+
+​	[Mathjax和katex的功能比较（VSCode+MPE） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/381263375)，mathjax最通用，且能打`\tag{1}\label{eq}`在正文中引用`\eqref{}`
+
+**highlight**
+
+​	目前`tango`最好看，其它样例见[Garrick Aden-Buie - Pandoc Syntax Highlighting Examples (garrickadenbuie.com)](https://www.garrickadenbuie.com/blog/pandoc-syntax-highlighting-examples/)
+
+**theme**
+
+​	见[Bootswatch：Bootstrap 的免费主题](https://bootswatch.com/)
+
+>  'arg' should be one of "default", "bootstrap", "cerulean", "cosmo", "darkly", "flatly", "journal", "lumen", "paper", "readable", "sandstone", "simplex", "spacelab", "united", "yeti"
+
+提示：上述原生模板对code_folding有原生支持，如果使用`bslib::bootswatch_themes()`的，即
+
+```
+theme:
+	bootswatch: materia
 ```
 
-- （可选）使用`rmdformats`包
+这些支持不太好，有div窗口
 
-```yaml
-output:
-  rmdformats::readthedown:
-    self_contained: true
-    thumbnails: true
+**df_print**: paged
+
+​	这个可以翻页，高级！
+
+**code_folding**
+
+​	全部代码最初折叠`hide`，全部最初展开`show`。默认`none`没有这个功能键
+
+​	[第 3 章 html-code-folding| R Markdown 指南 (cosname.github.io)](https://cosname.github.io/rmarkdown-guide/rmarkdown-document.html#html-code-folding)
+
+​	如果想让部分代码块在一开始就显示，则可以在代码块选项中使用 `class.source = 'fold-show'`。反之， `class.source = 'fold-hide'`
+
+[第 3 章 使用 R Markdown 创建常用文档 | R Markdown 指南 (cosname.github.io)](https://cosname.github.io/rmarkdown-guide/rmarkdown-document.html#html-code-folding)
+
+## html导出设置(rmdformats)
+
+所有样式[juba/rmdformats: HTML output formats for RMarkdown documents (github.com)](https://github.com/juba/rmdformats?tab=readme-ov-file#formats-gallery)
+
+模板体验[lockdown template example • rmdformats (juba.github.io)](https://juba.github.io/rmdformats/articles/examples/lockdown.html)
+
+缺点：编译文件较大，1-2MB
+
+rmdformats的特殊参数
+
+- `thumbnails` : if TRUE, display content images as thumbnails
+- `lightbox` : if TRUE, add lightbox effect to content images
+- `gallery` : if TRUE, add navigation between images when displayed in lightbox
+- `use_bookdown` : if TRUE, will use `bookdown` instead of `rmarkdown` for HTML rendering, thus providing section numbering and [cross references](https://bookdown.org/yihui/bookdown/cross-references.html).
+- `embed_fonts` : if `TRUE` (default), use local files for fonts used in the template instead of links to Google Web fonts. This leads to bigger files but ensures that the fonts are available
+
+```
+output: 
+  rmdformats::robobook:
+    # use_bookdown: true
     lightbox: true
-    gallery: false
-    highlight: tango
-    df_print: kable
+    gallery: true
+    # code_download: true
+    code_folding: hide
+    highlight: arrow
+    df_print: paged
+    math_method: mathjax
 ```
 
-![img](https://img2020.cnblogs.com/blog/1373034/202104/1373034-20210425091256095-56360833.png)
+robobook是仿bookdown的，比较简洁
 
 # 2. knit代码输出控制
 

@@ -134,3 +134,22 @@ editor.experimental.stickyScroll.enabled
 ```
 
 ![img](https://img-blog.csdnimg.cn/1ba30bfa12374d809b6785d4b928298d.png)
+
+## pipreqs导出包
+
+[bndr/pipreqs: pipreqs - Generate pip requirements.txt file based on imports of any project. Looking for maintainers to move this project forward. (github.com)](https://github.com/bndr/pipreqs#usage)
+
+可以只导出工程的包
+
+可以不要版本
+
+```
+pipreqs  --mode no-pin
+```
+
+如果要导出pip的所有包
+
+```
+pip freeze | findstr /V "==" > requirements.txt
+```
+
