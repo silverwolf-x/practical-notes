@@ -153,3 +153,30 @@ pipreqs  --mode no-pin
 pip freeze | findstr /V "==" > requirements.txt
 ```
 
+## 下载cp311的包
+
+有时最新版本的oython有很多包每跟上，兼容报错
+
+# ydata_profiling中文
+
+这是一个数据探索EDA自动化包，见[招商银行FinTech训练营数据赛道竞赛平台使用说明_牛客网 (nowcoder.com)](https://www.nowcoder.com/discuss/480746781626621952)
+
+词云图没有中文：`~\ydata_profiling\visualisation\plot.py`中，添加font_path
+
+```python
+wordcloud = WordCloud(
+            background_color="white", random_state=123, width=300, height=200, scale=2,     font_path=r'C:\Users\Administrator\AppData\Local\Microsoft\Windows\Fonts\SimHei.ttf'
+        ).generate_from_frequencies(word_dict)
+```
+
+这里黑体由[百分百解决你的matplotlib画图中文乱码问题 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/566430362)中http://129.204.205.246/downloads/SimHei.ttf提供
+
+从而后面都能用
+
+```python
+import matplotlib.pyplot as plt
+plt.rcParams['font.sans-serif'] = ['SimHei']# 黑体
+plt.rcParams['axes.unicode_minus'] = False# 解决中文显示问题
+```
+
+显示了

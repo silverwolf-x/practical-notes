@@ -57,6 +57,7 @@ git push origin master -f
 git rm -r --cached .
 git add .
 git commit -m 'update .gitignore'
+git push
 ```
 
 - **仓库删除model文件夹，改为release上传，避免git lfs爆免费额度**
