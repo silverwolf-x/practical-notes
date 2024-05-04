@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "+r与rmd使用指南.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": true
               }
             }
@@ -75,11 +75,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 247.5
+    "width": 247.5,
+    "collapsed": true
   },
   "right": {
     "id": "065dbfdc460999d6",
