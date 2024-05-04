@@ -157,7 +157,7 @@ pip freeze | findstr /V "==" > requirements.txt
 
 有时最新版本的oython有很多包每跟上，兼容报错
 
-# ydata_profiling中文
+## ydata_profiling中文
 
 这是一个数据探索EDA自动化包，见[招商银行FinTech训练营数据赛道竞赛平台使用说明_牛客网 (nowcoder.com)](https://www.nowcoder.com/discuss/480746781626621952)
 
@@ -180,3 +180,25 @@ plt.rcParams['axes.unicode_minus'] = False# 解决中文显示问题
 ```
 
 显示了
+
+## lightgbm gpu编译
+
+[Silverwolf-x/LightGBM-Nvidia-Win10: 编译nvidia gpu成功存档，提供GPU编译后的wheel包，可以直接安装运行 (github.com)](https://github.com/Silverwolf-x/LightGBM-Nvidia-Win10)
+
+## Anaconda环境迁移：直接将之前搭建好的环境从一个机子迁移到另一个机子
+
+[【保姆级教程】Anaconda环境迁移：直接将之前搭建好的环境从一个机子迁移到另一个机子-CSDN博客](https://blog.csdn.net/qq_40968179/article/details/128990022)
+
+1. 复制整个env到新电脑（建议不压缩打包后复制，加快专属传输效率）
+
+2. 新电脑：
+
+    ```shell
+    conda config --append envs_dirs D:\ml
+    ```
+
+    
+
+移植使用autogluon的多模态模型要移植这个
+
+C:\Users\Administrator\.cache\huggingface\hub\models--google--electra-base-discriminator

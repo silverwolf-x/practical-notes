@@ -1,4 +1,3 @@
-[TOC]
 
 # vscode 环境配置
 
@@ -128,7 +127,7 @@ conda config --set auto_activate_base true	# 默认进入base环境
 conda list --revisions
 ```
 
-## 常用包安装
+## jupyter常用包安装
 
 编译jupyter需要`ipykernel`，导出html和py需要`notebook`
 
@@ -141,6 +140,18 @@ pip install ipykernel notebook ipywidgets
 pip install tqdm numpy pandas matplotlib scikit-learn seaborn 
 pip install transformers
 ```
+
+## jupyter的tqdm条
+
+[IPyWidget Support in VS Code Python · microsoft/vscode-jupyter Wiki (github.com)](https://github.com/microsoft/vscode-jupyter/wiki/IPyWidget-Support-in-VS-Code-Python)
+
+在setting.json中设置
+
+```
+"jupyter.widgetScriptSources": ["jsdelivr.com", "unpkg.com"],
+```
+
+然后记得更新vscode版本
 
 ## 使用习惯
 

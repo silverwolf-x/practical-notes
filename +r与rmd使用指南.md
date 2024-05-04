@@ -171,7 +171,7 @@ knitr::opts_chunk$set(fig.path = "Figs/",out.width="45%",fig.align='center')
 
 查看默认路径
 
-```
+```r
 getwd()
 ```
 

@@ -1,0 +1,15 @@
+{
+  "defaultViewMode": "preview",
+  "showLineNumber": true,
+  "useMarkdownLinks": true,
+  "alwaysUpdateLinks": true,
+  "livePreview": false,
+  "showUnsupportedFiles": true,
+  "vimMode": false,
+  "pdfExportSettings": {
+    "pageSize": "Legal",
+    "landscape": false,
+    "margin": "2",
+    "downscalePercent": 100
+  }
+}

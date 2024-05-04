@@ -15,7 +15,7 @@ git tag给某一次commit做一次静态标注。可以commit注释。常用于g
 
 ```
 git tag -a v1.0.0 -m "Release version 1.0.0" 
-git push origin --tags
+git push origin --tags # 推送本地所有tag
 ```
 删除标签
 
@@ -31,7 +31,7 @@ git ls-remote -t # 查看远程tags
 git tag -l  # 查看本地tag
 git tag -d xxx # 删除本地tag
 git fetch origin --prune-tags # 最后远程拉取远程tags   
- git push origin --delete tag 标签名  # 删除远程tags
+git push origin --delete tag 标签名  # 删除远程tags
 ```
 
 - vscode按按钮同步tag
