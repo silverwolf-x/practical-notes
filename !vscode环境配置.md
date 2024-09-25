@@ -126,6 +126,30 @@ conda config --set auto_activate_base true	# 默认进入base环境
 ```
 conda list --revisions
 ```
+## pip设置多个源
+在C:\Users\用户名\AppData\Roaming\pip目录下新建配置文件pip.ini
+内容如下：
+```
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple/
+extra-index-url =
+    https://mirrors.aliyun.com/pypi/simple/
+    https://pypi.douban.com/simple/
+    https://pypi.mirrors.ustc.edu.cn/simple/
+    https://pypi.org/simple
+
+[install]
+trusted-host =
+    pypi.tuna.tsinghua.edu.cn
+    mirrors.aliyun.com
+    pypi.douban.com
+    pypi.mirrors.ustc.edu.cn
+    pypi.org
+
+```
+以后执行pip命令，会自动依次查找每个源，如果在某个源中找到了需要安装的包，就会下载并安装。如果在所有源中都找不到包，就会提示找不到匹配的包。
+
+注：首选清华源，速度最快最稳定！
 
 ## jupyter常用包安装
 
@@ -350,3 +374,69 @@ install.packages("rmdformats") # 可选rmdformat有好看的html
 # wget
 
 [wget 的安装与使用（Windows）_windows wget-CSDN博客](https://blog.csdn.net/m0_45447650/article/details/125786723)
+
+# CUDA + cuDNN + TensorRT
+
+## 驱动
+首先要安装nvidia驱动（个人喜欢studio版本，更加稳定），此时cmd有如下命令
+```cmd
+nvidia-smi
+```
+显示driver version为555.99，**可安装的最高CUDA版本**为12.5
+
+一般而言，如果想要调用cuda要自己电脑上安装，或者在conda环境中安装。
+[【环境搭建：onnx模型部署】onnxruntime-gpu安装与测试（python）-CSDN博客](https://blog.csdn.net/qq_40541102/article/details/130086491)
+
+
+## 特例：Torch
+> [!NOTE] torch
+> 由于torch的超级懒人包会自带cuda和cudnn的编译，因此直接安装cuda版本的torch和nvidia驱动即可畅通无阻的使用！
+> tensorrt可以按照官方指示安装[安装 — Torch-TensorRT文档](https://pytorch.org/TensorRT/getting_started/installation.html)
+> ```python
+> import torch
+> print(f'{torch.__version__=} {torch.version.cuda=} {torch.backends.cudnn.version()=}')
+> ```
+> >torch.__version__='2.4.0+cu124' torch.version.cuda='12.4' torch.backends.cudnn.version()=90100
+> 表明torch版本是2.4.0+cu124，**当前torch内置编译的CUDA版本**为12.4，内置的cudnn版本为9.1.0
+
+## CUDA
+[CUDA Toolkit Archive | NVIDIA Developer](https://developer.nvidia.com/cuda-toolkit-archive)
+cuda和驱动的版本对应：
+[CUDA  Release Notes](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#id5)
+自定义安装--只选择CUDA。
+如果没有安装visual studio，还要把CUDA里面的 Visual Studio Integration取消勾选，否则会安装失败
+```cmd
+nvcc -V
+```
+> Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Thu_Mar_28_02:30:10_Pacific_Daylight_Time_2024
+Cuda compilation tools, release 12.4, V12.4.131
+Build cuda_12.4.r12.4/compiler.34097967_0
+
+显示系统内安装的是cuda12.4
+
+还有其它命令可以尝试：
+在C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\extras\demo_suite文件夹
+```cmd
+deviceQuery
+```
+## cuDNN
+[cuDNN Archive | NVIDIA Developer](https://developer.nvidia.com/cudnn-archive)
+选择Tarball
+
+解压缩cudnn-windows-x86_64-8.4.0.27_cuda11.6-archive.zip 直接解压缩，完成后点击去你能看到如下三个文件夹（bin、include、lib）。把这三个文件夹的文件分别拷贝到CUDA安装目录对应的（bin、include、lib）文件夹中即可。CUDA的lib目录有x64 、Win32、cmake三个文件夹，拷到其中的x64这个文件夹中即可。
+
+- 查看版本
+`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\include\cudnn_version.h`
+
+```c
+#define CUDNN_MAJOR 9
+#define CUDNN_MINOR 3
+#define CUDNN_PATCHLEVEL 0
+
+#define CUDNN_VERSION (CUDNN_MAJOR * 10000 + CUDNN_MINOR * 100 + CUDNN_PATCHLEVEL)
+```
+表示版本为9.3.0，显示为90300
+
+## TensorRT
+[TensorRT 10.x Download | NVIDIA Developer](https://developer.nvidia.com/tensorrt/download/10x)

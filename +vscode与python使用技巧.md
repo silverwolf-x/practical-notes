@@ -15,32 +15,37 @@ nvitop -m full
 > 2. compact
 > 3. full
 
+## 更新python版本
+```
+conda install python=3.12
+```
 ## 一键更新python所有包
 
-安装`pip-review`包
+参照github的讨论
+https://gist.github.com/hritik5102/35b2886771d60fc6d7a95b6fd55c62ba?permalink_comment_id=5026873#gistcomment-5026873
+一行命令即可
 
 ```
-pip-review # 看能更新的包详情
-pip-review --auto -C # 自动更新并跳过安装失败的包
+pip list --outdated | %{$_.split(' ')[0]} | %{ python.exe -m pip install --upgrade $_}
 ```
-
-> options:
->   -h, --help            show this help message and exit
->   --verbose, -v         Show more output
->   --raw, -r             Print raw lines (suitable for passing to pip install)
->   --interactive, -i     Ask interactively to install updates
->   --auto, -a            Automatically install every update found
->   --continue-on-fail, -C
->                         Continue with other installs when one fails
->   --freeze-outdated-packages
->                         Freeze all outdated packages to "requirements.txt" before upgrading them
-
+linux
+```linux
+for i in  $(pip list --outdated --format=columns |tail -n +3|cut -d" " -f1); do pip install $i --upgrade; done
+```
 ​	注意pytorch系列的更新要自己到[PyTorch](https://pytorch.org/)找cuda版本的链接，否则pip-review只会更新到cpu版本
 
 ```
 pip3 uninstall torch torchvision torchaudio
 pip3 install ... # 官网自己找
+pip3 install torch torchvision  --index-url https://download.pytorch.org/whl/cu124
 ```
+
+## 查看包之间的冲突
+```
+pip install pipdeptree
+pipdeptree
+```
+
 
 ## vscode自定义代码片段
 
@@ -152,10 +157,6 @@ pipreqs  --mode no-pin
 ```
 pip freeze | findstr /V "==" > requirements.txt
 ```
-
-## 下载cp311的包
-
-有时最新版本的oython有很多包每跟上，兼容报错
 
 ## ydata_profiling中文
 

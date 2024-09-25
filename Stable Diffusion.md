@@ -106,11 +106,19 @@ default_ddp_path = Path(paths.models_path, 'deepdanbooru')
 
 需要在requirements_versions.txt中，更改requirements_versions.txt，否则会重装
 
+### RuntimeError: mat1 and mat2 must have the same dtype, but got Half and Float8_e4m3fn
+
+config.json改为
+```json
+"fp8_storage": ""
+```
+
 ## 管理pip包
 
 - 正确方式
 
 ```
+python.exe -m pip install --upgrade pip
 python.exe -m pip list
 ```
 

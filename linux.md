@@ -6,6 +6,12 @@ date: 2024-03-05
 
 ## WSL
 
+### 使用模拟器冻结虚拟化后，要启动后WSL的操作
+```
+bcdedit /set hypervisorlaunchtype auto
+```
+之前使用模拟器 提示让我禁用 Hyper-V ， 之后我进行了 Hyper-V 的重启 试过上面的所以的方法都没有效果，在最后执行了 如上指令 在重启电脑 得到了解决 希望可以帮助到你
+[Error code: Wsl/Service/CreateInstance/CreateVm/HCS/HCS_E_HYPERV_NOT_INSTALLED · Issue #10332 · microsoft/WSL (github.com)](https://github.com/microsoft/WSL/issues/10332)
 ### WSL2转化
 
 开启windows的wsl功能，用WSL2还要开启hyper-V
@@ -163,17 +169,31 @@ p10k configure
 
 [Linux 常用操作命令大全（最后更新时间：2024年1月）_linux常用命令-CSDN博客](https://blog.csdn.net/m0_46422300/article/details/104645072)
 
-```
+```sh
 uname -r # 
 cd ~       # 返回主目录
 rm -r * #删除文件夹下所有文件
 ```
-
+更新
+```sh
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt update
+```
+清除
+```sh
+sudo apt-get autoclean                # 删除旧版本软件缓存
+sudo apt-get clean                    # 删除系统内所有软件缓存
+sudo apt-get autoremove             # 删除系统不再使用的孤立软件
+```
 ## 软件安装
 
-### neofetch
+### fastfetch
 
 看linux发行版信息
+```sh
+wget https://github.com/fastfetch-cli/fastfetch/releases/download/2.11.5/fastfetch-linux-amd64.deb
+```
 
 ### 编译相关
 
@@ -228,8 +248,8 @@ ubuntun最为诟病的一点是夹带私货snap，我们决定卸载它。[如�
 
 WSL2中，可以直接使用cuda驱动，因此可以直接推理，如直接使用torch的cuda加速
 
-```
-python -c "import torch;torch.cuda.is_available()"
+```sh
+python -c "import torch;print(torch.cuda.is_available())"
 ```
 
 但是，如果需要cuda编译opencv，llama.cpp，就需要下载编译包CUDA-toolkit
@@ -379,3 +399,7 @@ cmake-3.29.1-linux-x86_64/share/cmake-3.29/Modules/Platform/Windows-NVIDIA-CUDA.
 ```
 
 这些是Microsoft Visual Studio 专用命令，linux没有
+
+# Docker
+dockerwindows使用linux
+优点：可以使用WSL，不用开启hyper-v

@@ -62,3 +62,36 @@ git push
 
 - **仓库删除model文件夹，改为release上传，避免git lfs爆免费额度**
 - **更新`README.md`表述**
+
+## 合并dev分支并删除
+要将 `dev` 分支合并到 `master` 并删除 `dev` 分支，同时将这些操作应用于远程仓库，以下是详细的步骤：
+
+1. 切换到 `master` 分支
+```bash
+git checkout master
+```
+
+2. 合并 `dev` 分支到 `master`
+```bash
+git merge dev
+```
+
+ 3. 删除本地 `dev` 分支
+```bash
+git branch -d dev
+```
+
+如果分支还没有完全合并且你确实要强制删除，可以用 `-D` 选项：
+```bash
+git branch -D dev
+```
+4. 推送合并后的 `master` 分支到远程
+```bash
+git push origin master
+```
+
+5. 删除远程 `dev` 分支
+```bash
+git push origin --delete dev
+```
+

@@ -8,15 +8,11 @@
         "type": "tabs",
         "children": [
           {
-            "id": "052f26c2fc1d0549",
+            "id": "898f2899ad4854a9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "+r与rmd使用指南.md",
-                "mode": "preview",
-                "source": true
-              }
+              "type": "graph",
+              "state": {}
             }
           }
         ]
@@ -43,22 +39,12 @@
             }
           },
           {
-            "id": "17db28587f652250",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "+r与rmd使用指南.md"
-              }
-            }
-          },
-          {
             "id": "5d2b726871ad3e8a",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"date\"]",
+                "query": "删除",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -75,13 +61,25 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
+      },
+      {
+        "id": "16d945cf48b3f233",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "17db28587f652250",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 247.5,
-    "collapsed": true
+    "width": 247.5
   },
   "right": {
     "id": "065dbfdc460999d6",
@@ -97,7 +95,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "+r与rmd使用指南.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -109,7 +106,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "+r与rmd使用指南.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,7 +139,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -152,31 +149,43 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "switcher:Open quick switcher": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "052f26c2fc1d0549",
+  "active": "898f2899ad4854a9",
   "lastOpenFiles": [
-    "安装Windows应用msix.md",
-    "视频转字幕及其翻译.md",
-    "Stable Diffusion.md",
-    "新建文本文档.txt",
-    "README.md",
-    "matlab安装.jpg",
-    "+r与rmd使用指南.md",
-    "未命名.canvas",
-    "未命名.md",
-    "2024-05-04.md",
-    "你好.md",
+    "折腾有意思的.md",
     "+git&github使用.md",
-    "!vscode环境配置.md",
-    "latex学习.pdf",
+    "+vscode与python使用技巧.md",
+    "Stable Diffusion.md",
+    "+r与rmd使用指南.md",
     "使用vscode登录ssh.md",
-    "+vscode与python使用技巧.md"
+    "视频转字幕及其翻译.md",
+    "ADF.md",
+    "latex学习.pdf",
+    "linux.md",
+    "matlab安装.jpg",
+    "README.md",
+    "Typst.md",
+    "!vscode环境配置.md",
+    "7zip使用.md",
+    "安装Windows应用msix.md",
+    "精算实习筛选.md",
+    "未命名.canvas",
+    "QQ图片20240826202620.jpg",
+    "Pasted image 20240516222158.png",
+    "Pasted image 20240516222516.png",
+    "Pasted image 20240516221817.png",
+    "未命名.md",
+    "Pasted image 20240516221805.png",
+    "assets/image-20240113005900633.png",
+    "新建文本文档.txt",
+    "2024-05-04.md",
+    "你好.md"
   ]
 }
