@@ -54,17 +54,26 @@ table插入标题caption
 ```
 时，空白的东西不要打空格，会报错，即
 
-> [!NOTE]错误的
->```
-> #three-line-table[
->   |     | *Location* | *Height* | *Score* |
->   | ------ | ---------- | -------- | ------- |
->   | John   | Second St. | 180 cm   |  5      |
->   | Wally  | Third Av.  | 160 cm   |  10     |
-> ]
+> [!NOTE]
+>
+> 错误的
+>
 > ```
-> > [!NOTE]正确的
->```
+> #three-line-table[
+> |     | *Location* | *Height* | *Score* |
+> | ------ | ---------- | -------- | ------- |
+> | John   | Second St. | 180 cm   |  5      |
+> | Wally  | Third Av.  | 160 cm   |  10     |
+> ]
+> 
+> ```
+> 
+
+>  [!NOTE]
+> 
+>  正确的
+>
+> ```
 > #three-line-table[
 >   || *Location* | *Height* | *Score* |
 >   | ------ | ---------- | -------- | ------- |

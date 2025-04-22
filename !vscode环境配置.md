@@ -1,12 +1,12 @@
-
 # vscode 环境配置
 
 只介绍配置，不详细介绍具体使用习惯与技巧。
 
 关注命令的相关配置，即使用`python --help`、 `pandoc --help`
 
-# python：`miniconda`
+# python：`miniforge`
 
+用miniforge（mamba版本的miniconda)
 ## 安装与切换默认环境不是base
 
 https://blog.csdn.net/Inochigohan/article/details/120400990
@@ -110,6 +110,7 @@ conda env list
 
 ```
 pip cache purge
+conda clean -a -y
 ```
 
 ### base环境相关

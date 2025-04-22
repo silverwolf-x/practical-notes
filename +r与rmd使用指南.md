@@ -175,3 +175,15 @@ knitr::opts_chunk$set(fig.path = "Figs/",out.width="45%",fig.align='center')
 getwd()
 ```
 
+查看所有包
+
+```
+installed.packages()
+```
+
+更新所有包
+
+```
+install.packages(old.packages())
+```
+

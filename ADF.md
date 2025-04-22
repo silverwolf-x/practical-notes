@@ -31,9 +31,9 @@ print(adfuller(timeseries, autolag="AIC", store=True)[-1].__dict__)
 >  'icbest': 3.274087515710903,
 >  '_str': 'Augmented Dickey-Fuller Test Results'}
 
- 
+
 这里说明ADF检验0阶平稳，取lag=9 ^a729fe
- 
+
 ### pmdarima(python) == tseries(R)
 pmdarima是tseries这个R包的python版本，程序实现方式和所用默认参数一致
 ```python
@@ -135,7 +135,9 @@ adf_test <- adf.test(ts)
 在aTSA的结果中，高亮部分分别对应statsmodels和tseries的检验结果。上述默认参数表得到验证。
 
 
-> [!NOTE] [Augmented Dickey–Fuller test - Wikipedia](https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller_test)
+> [!NOTE] 
+>
+> [Augmented Dickey–Fuller test - Wikipedia](https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller_test)
 > By including lags of the order _p_ the ADF formulation allows for higher-order autoregressive processes. This means that the lag length _p_ has to be determined when applying the test. One possible approach is to test down from high orders and examine the [_t_-values](https://en.wikipedia.org/wiki/T-value "T-value") on coefficients. An alternative approach is to examine information criteria such as the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion "Akaike information criterion"), [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) or the [Hannan–Quinn information criterion](https://en.wikipedia.org/wiki/Hannan%E2%80%93Quinn_information_criterion "Hannan–Quinn information criterion").  
 > 通过包含 p 阶滞后，ADF 公式允许更高阶的自回归过程。这意味着在应用测试时必须确定滞后长度 p。一种可能的方法是从高阶开始测试并检查系数的 t 值。另一种方法是检查信息准则，例如 Akaike 信息准则、贝叶斯信息准则或 Hannan-Quinn 信息准则。
 

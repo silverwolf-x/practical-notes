@@ -137,3 +137,10 @@ cd Scripts
 pip list
 ```
 
+# ComfyUI
+
+## 公用sd模型
+
+https://www.bilibili.com/video/BV1Ew411776J/
+
+extra_model_paths.yaml.example改为sd文件夹路径，并改后缀为yaml

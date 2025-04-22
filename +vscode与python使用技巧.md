@@ -1,6 +1,27 @@
 # vscode小技巧
 
-监视nvidia-smi刷新
+## 快捷键
+
+- **Ctrl + alt+键盘的上下键** 一列上出现多个光标
+- **shift+alt**同时可以选中多列
+- **Ctrl+shift+l** 选中相同的内容
+- **Ctrl+shift+F** 字体简体和繁体转换
+- **Ctrl+alt+F** 一键整理
+- **Ctrl + shift + y** 打开控制台页面
+
+## 报错ValueError: numpy.dtype size 
+
+> ## ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+
+安装
+
+```
+pip install -U numpy<2
+```
+
+
+
+## 监视nvidia-smi刷新
 
 安装`nvitop`包，输入
 
@@ -21,6 +42,10 @@ conda install python=3.12
 ```
 ## 一键更新python所有包
 
+pip-manage
+
+https://github.com/realshouzy/pip-manage
+
 参照github的讨论
 https://gist.github.com/hritik5102/35b2886771d60fc6d7a95b6fd55c62ba?permalink_comment_id=5026873#gistcomment-5026873
 一行命令即可
@@ -37,10 +62,21 @@ for i in  $(pip list --outdated --format=columns |tail -n +3|cut -d" " -f1); do 
 ```
 pip3 uninstall torch torchvision torchaudio
 pip3 install ... # 官网自己找
-pip3 install torch torchvision  --index-url https://download.pytorch.org/whl/cu124
+pip3 install -U torch torchvision  --index-url https://download.pytorch.org/whl/cu124
 ```
 
+在requirement.txt直接指定
+
+```
+# torch在pytorch官网中下载cuda版本
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch
+```
+
+
+
 ## 查看包之间的冲突
+
 ```
 pip install pipdeptree
 pipdeptree
@@ -203,3 +239,92 @@ plt.rcParams['axes.unicode_minus'] = False# 解决中文显示问题
 移植使用autogluon的多模态模型要移植这个
 
 C:\Users\Administrator\.cache\huggingface\hub\models--google--electra-base-discriminator
+## 多线程跑for
+```python
+##############################################################
+
+## single-processing
+
+# pdb.set_trace()
+
+# for i in frame_numbers:
+
+#     self.process_a_frame(i)
+
+#     break
+
+##############################################################
+
+
+
+##############################################################
+
+## multi-processing
+
+num_pros = 8 if True else 1
+
+with Pool(processes=num_pros) as p:  # , maxtasksperchild=2
+
+p.map(self.process_a_frame, [i for i in frame_numbers])
+
+##############################################################
+```
+## 截取一部分文件夹路径
+
+```python
+from pathlib import Path
+def split_path(original_path,base_path):
+
+    '''
+
+    D:\dataset\Multi-v1\recorded_trackfiles\DR_CHN_Merging_ZS0\train截取为D:\recorded_trackfiles\DR_CHN_Merging_ZS0\train
+
+    '''
+
+    original_path = Path(original_path)
+
+    relative_path = original_path.relative_to(base_path) # 去除 base_path 部分
+
+    new_path = os.path.join(ROOT,relative_path)
+
+    return new_path
+```
+
+##  截取一部分文件夹路径2
+from pathlib import Path
+target = Path(self.cur_track_name).parts[-4]  # DR_CHN_Merging_ZS取'D:\\recorded_trackfiles\\DR_CHN_Merging_ZS0\\val\\sorted\\tracks_1.csv'倒数第三个部分
+
+假设路径包含完整路径 
+ID = Path(r'D:\heatmtp_it_data\DR_CHN_Merging_ZS0\val\tracks_1001_f1.py') 
+Path(ID).parent.parent print(desired_path) # 输出 'D:\heatmtp_it_data\DR_CHN_Merging_ZS0'
+
+## python编译包失败fairseq
+
+https://blog.csdn.net/qzzzxiaosheng/article/details/125119006
+
+背景：fairseq最高只支持3.8版本，我要编译现代的3.10
+
+      building 'fairseq.libbleu' extension
+      error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools": https://visualstudio.microsoft.com/visual-cpp-build-tools/
+      [end of output]
+
+有3种可能的解决方法：
+
+- 电脑安装VS本地编译or
+
+- 用conda 安装迷你本地编译环境
+
+  ```
+  conda install libpython m2w64-toolchain -c msys2
+  conda install m2w64-toolchain -c msys2
+  ```
+
+- 用conda install 试一下
+
+最终解决方案：
+
+https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI/issues/2151
+
+## 用git action编译win包wheel
+
+见https://github.com/Silverwolf-x/win-whl/blob/main/.github/workflows/fairseq.yml
