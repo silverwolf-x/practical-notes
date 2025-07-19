@@ -1,5 +1,5 @@
 ---
-date: 2024-03-05
+0date: 2024-03-05
 ---
 
 [TOC]
@@ -12,6 +12,7 @@ bcdedit /set hypervisorlaunchtype auto
 ```
 之前使用模拟器 提示让我禁用 Hyper-V ， 之后我进行了 Hyper-V 的重启 试过上面的所以的方法都没有效果，在最后执行了 如上指令 在重启电脑 得到了解决 希望可以帮助到你
 [Error code: Wsl/Service/CreateInstance/CreateVm/HCS/HCS_E_HYPERV_NOT_INSTALLED · Issue #10332 · microsoft/WSL (github.com)](https://github.com/microsoft/WSL/issues/10332)
+
 ### WSL2转化
 
 开启windows的wsl功能，用WSL2还要开启hyper-V
@@ -31,7 +32,7 @@ powershell中
 wsl --version # 看linux内核版本
 ```
 
-> WSL 版本： 2.1.5.0 https://github.com/microsoft/WSL/releases
+> WSL 版本： 2.1.5.0 
 > 内核版本： 5.15.146.1-2
 > WSLg 版本： 1.0.60
 > MSRDC 版本： 1.2.5105
@@ -41,25 +42,39 @@ wsl --version # 看linux内核版本
 
 表示linux内核版本是 5.15.146.1-2
 
-```
-wsl --update --web-download # 更新wsl和对应内核（在WSL2下）
-```
+下载最新的https://github.com/microsoft/WSL/releases 安装即可更新WSL，内核和WSLg
 
-不要用**wsl --update**命令，它会调用windows更新来查找wsl更新
+> [!note]
+>
+> ```
+> wsl --update --web-download # 更新wsl和对应内核（在WSL2下）
+> ```
+>
+> 不要用**wsl --update**命令，它会调用windows更新来查找wsl更新
+>
+> 如果是使用WSL 1的话，内核应该还是在4.4
+>
+> 这样安装了一个windows app软件`适用于 Linux 的 Windows 子系统`
 
-如果是使用WSL 1的话，内核应该还是在4.4
-
-这样安装了一个windows app软件`适用于 Linux 的 Windows 子系统`
 ### WSL的linux内核自定义更新
+
 垃圾WSL官方推送一坨屎，久久不推送 https://zhuanlan.zhihu.com/p/355606922 
 懒得自己编译，使用第三方编译好的库更新
-~~https://github.com/Locietta/xanmod-kernel-WSL2/releases/tag/6.9.9-locietta-WSL2-xanmod1.1, 下载v4版本的~~
-1. 上面那个自2024年7月就没更新了，用下面这个
-https://github.com/Nevuly/WSL2-Linux-Kernel-Rolling 
-或者LTS版本(6.6.x) https://github.com/Nevuly/WSL2-Linux-Kernel-Rolling-LTS
-> 各版本的重大更新看 https://en.wikipedia.org/wiki/Linux_kernel_version_history
-2. 下载bzImage，然后用最新的WSL2微软软件 https://github.com/microsoft/WSL/releases 指定内核地址即可，可以在linux中用fastfetch看到
 
+1. https://github.com/Nevuly/WSL2-Linux-Kernel-Rolling 
+或者LTS版本(6.12.x) https://github.com/Nevuly/WSL2-Linux-Kernel-Rolling-LTS
+> 各版本的重大更新看 https://en.wikipedia.org/wiki/Linux_kernel_version_history
+2. 下载bzImage，然后用WSL2自带的wslsetting软件指定内核地址即可，可以在linux中用fastfetch看到
+
+> [!note]
+>
+> 可能有如下情况：更新自定义内核后，使用基于WSL2后端的windows docker打开时无端占用大量CPU，达到50%。猜测原因是自定义内核选择的内核附加组件缺失。linux中通过下列命令查看
+>
+> ```
+> lsmod
+> ```
+>
+> 暂时的解决方法是使用回原来WSL自带的老旧内核，这是官方编译全的：wslsetting软件中，内核地址留空
 
 ### WSL使用
 
@@ -99,6 +114,8 @@ sudo apt update
 
 [WSL2安装Debian(Ubuntu)并配置国内apt源 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/99938831)
 
+https://blog.willxup.top/archives/wsl-install
+
 ### 更改安装位置
 
 [关于WSL2迁移系统、配置默认系统&用户的补充 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/643184142)
@@ -107,7 +124,8 @@ sudo apt update
 wsl --export Ubuntu-22.04 e:\wsl-ubuntu22.04.tar
 wsl --unregister Ubuntu-22.04
 wsl --import Ubuntu-22.04 e:\wsl-ubuntu22.04 e:\wsl-ubuntu22.04.tar --version 2
-ubuntu2004 config --default-user sakura
+wsl --set-default Ubuntu-22.04 
+
 del e:\wsl-ubuntu22.04.tar
 ```
 
@@ -116,9 +134,9 @@ del e:\wsl-ubuntu22.04.tar
 修改Linux apt下载地址
 
 ```
-sudo chmod 777 /etc/apt/sources.list # 提权，方便直接使用vscode编辑文件
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bk # 存档
-code /etc/apt/sources.list
+cp /etc/apt/sources.list ~/sources.list # 复制出来根目录修改
+code ~/sources.list # 用 VS Code 编辑
+sudo cp ~/sources.list /etc/apt/sources.list # 编辑完后覆盖回去
 ```
 
 复制
@@ -128,11 +146,11 @@ code /etc/apt/sources.list
 [debian | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror](https://mirrors.tuna.tsinghua.edu.cn/help/debian/)
 
 ```
-sudo apt update
+sudo apt update && sudo apt full-upgrade --autoremove -y
 ```
 
-
 ### root账户与用户提权
+
 一直用root操作会有系统损坏风险，最好设立账户然后提权
 -  可以无限设置密码
 ```powershell
@@ -141,18 +159,21 @@ wsl -d Arch -u root
 - 切换账户
 ```
 su root 
-nano /etc/sudoers
+cp /etc/sudoers ~/sudoers
+sudo cp ~/sudoers /etc/sudoers
 ```
 
 
-> [!NOTE] Title
+> [!note]
+>
 > 这是 `/etc/sudoers` 文件的内容，它控制用户和用户组使用 `sudo` 命令时的权限。以下是内容的中文解释：
 1. **Root 用户权限:**
+   
    ```
    root ALL=(ALL:ALL) ALL
    ```
    这行表示 `root` 用户拥有全系统的最高权限，可以以任何用户或用户组身份在任何主机上执行任何命令。
-
+   
 2. **Wheel 组:**
    ```
    # %wheel ALL=(ALL:ALL) ALL
@@ -168,37 +189,347 @@ nano /etc/sudoers
 
 **一般注释Wheel 就可以让所有用户都有sudo权限**
 
-### 一键配置zsh终端
+### debian配置zsh终端
 
-- 首先安装zsh，安装完毕后会自动进入zsh
-
-```
-#!/bin/bash
-# 如果是在docker容器内，可以去除sudo
-sudo apt update
-sudo apt install zsh wget git -y
-wget https://gitee.com/matthew1757405148/my_scripts/raw/master/install_zsh/install.sh
-chmod +x install.sh
-./install.sh
-```
-
-- 接着下载并配置插件和主题
+- 首先安装zsh
 
 ```
-#!/bin/bash
-export ZSH_CUSTOM=$ZSH_CUSTOM
-git clone https://gitee.com/hailin_cool/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://gitee.com/Annihilater/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-# 修改zsh配置
-sed -i 's/plugins=(git)/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/g' ~/.zshrc
-sed -i 's/ZSH_THEME="[^"]*"/ZSH_THEME="ys"/g' ~/.zshrc
-# 下面这一主题需要提前安装
-git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-sed -i 's/ZSH_THEME="[^"]*"/ZSH_THEME="powerlevel10k\/powerlevel10k"/g' ~/.zshrc
+sudo apt install zsh
+zsh --version
+chsh -s $(which zsh) # 将现在登陆的用户设置为默认shell
+# 注销，重新登陆后查看是否切换为zsh
+echo $SHELL 
+```
+
+- 接着使用oh-my-zsh管理插件
+
+  ```
+  sh -c "$(wget -O- https://install.ohmyz.sh)"
+  ```
+
+  下载并配置插件和主题
+
+  powerlevel10k,zsh -autosuggestions,zsh-syntax-highlighting
+
+  ```
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  ```
+
+[Ubuntu定制之换源 + VScode + JetBrains-Mono + zsh + powerlevel10k - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/537054661)
+
+- zsh 设置
+
+  一些插件需要设置才能启动
+
+  ```
+  nano .zshrc
+  ```
+
+  进入`.zshrc`，用如下命令启用插件
+
+  ```
+  # >>> Oh My Zsh 设置 <<<
+  export ZSH="$HOME/.oh-my-zsh"
+  source $ZSH/oh-my-zsh.sh
+  # OMZ 会自动从插件目录加载，否则需要手动 source 它们
+  ZSH_THEME="powerlevel10k/powerlevel10k"
+  plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  )
+  
+  # 自动建议插件的配置（放在 plugins= 之后）
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=cyan'
+  ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+  ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+  ```
+
+  然后刷新，并重启终端
+
+  ```
+  source ~/.zshrc
+  ```
+
+- 配置powerlevel10k主题。如果你想再次重启配置向导，运行以下程序。你可以随心所欲地做，次数不限。
+
+  ```
+  p10k configure
+  ```
+
+- zsh更新
+
+```
+omz update
+```
+
+## Arch Linux
+
+作为Linux发行版原神，以折腾为名，虽然老大仍然是debian系，声量在社区中不断增长，archwiki也很完善
+https://zhuanlan.zhihu.com/p/613738433
+
+### 联网测试
+
+```
+ping -c 4 1.1.1.1
+```
+
+### 安装appx
+
+https://github.com/yuk7/ArchWSL
+
+**20250501起arch官方支持了archlinux**
+
+https://wiki.archlinux.org/title/Install_Arch_Linux_on_WSL
+
+#### 创建账户
+
+开始默认是root账户，wsl的名字是archlinux。创建sakura到wheel用户组
+
+```
+useradd -m -G wheel -s /bin/bash sakura
+passwd sakura
+```
+
+安装sudo，配置权限
+
+（安装rust版本的sudohttps://github.com/trifectatechfoundation/sudo-rs)
+
+```
+pacman -S sudo
+sudo pacman -S nano
+```
+
+然后
+
+```
+nano visudo
+```
+
+找到这行并取消注释，保存退出
+
+```
+# %wheel ALL=(ALL:ALL) ALL
+```
+
+测试是否成功
+
+```
+su - sakura
+sudo ls /
+```
+
+最后更换wsl默认账户
+
+```
+wsl --manage archlinux --set-default-user sakura
+```
+
+#### 设置UTF8
+
+`nano` 和其他终端程序依赖正确的 locale 来处理字符宽度（尤其是中文是双字节）
+
+运行
+
+```
+locale
+```
+
+出现`locale: Cannot set LC_XXX to default locale: No such file or directory`表示 `en_US.UTF-8` 的 locale **没有被生成**，需要你手动启用并生成。
+
+编辑 `/etc/locale.gen`，取消对 `en_US.UTF-8` 的注释（删除前面的 `#`）
+
+然后，执行生成 locale
+
+```
+sudo locale-gen
+```
+
+验证设置
+
+```
+locale
+```
+
+没有报错
+
+#### 更换位置
+
+```
+wsl --export archlinux e:\archlinux.tar
+wsl --unregister archlinux
+wsl --import archlinux e:\archlinux e:\archlinux.tar --version 2
+wsl --set-default archlinux 
+wsl --manage archlinux --set-default-user sakura
+del e:\archlinux.tar
+```
+
+
+
+### 清华源（**也要tun模式才能连网络**）
+
+### nano 编辑完成后，ctrl s ，然后enter确定保存
+
+方法1：sudo提权为root操作
+
+```
+sudo nano /etc/pacman.d/mirrorlist
+# 编辑完保存，然后enter确认
+```
+
+方法2：
+
+```
+# 复制到主目录
+cp /etc/pacman.d/mirrorlist ~/mirrorlist
+
+# 用 VS Code 编辑（无 sudo）
+code ~/mirrorlist
+
+# 编辑完成后替换回原文件
+sudo cp ~/mirrorlist /etc/pacman.d/mirrorlist
+```
+
+https://mirrors.tuna.tsinghua.edu.cn/help/archlinux/
+
+#### archlinuxcn
+
+Arch Linux 中文社区仓库 是由 Arch Linux 中文社区驱动的非官方用户仓库。包含中文用户常用软件、工具、字体/美化包等。
+
+https://mirrors.tuna.tsinghua.edu.cn/help/archlinuxcn/
+
+编辑完后更新GPG key
+
+```
+sudo pacman-key --lsign-key "farseerfc@archlinux.org"
+sudo pacman -Syyu
+```
+
+#### yay接管包管理
+
+```
+sudo pacman -S yay
+```
+
+```
+yay -Sy archlinux-keyring && yay
+
+yay -S fastfetch
+yay -Rsu fastfetch #删除软件包及其依赖项
+yay -Sc # 清除软件缓存，即 /var/cache/pacman/pkg 目录下的文件
+yay -Syyu #更新系统上的所有软件包，包括更新系统
+yay -Qqe #列出所有显式安装（-e,explicitly显式安装；-n忽略外部包AU
+yay 软件包名或搜索词 _# 从仓库和 AUR 中交互式搜索和安装软件包。_  
+yay -Ps _# 显示已安装软件包和系统健康状况的统计数据。_
+```
+
+#### 使用yay安装zsh
+
+安装前提：配置archlinun源
+yay自动cmake构建github的包并融入到包体系中，之后安装zsh-theme-powerlevel10k-git
+
+```
+yay -S zsh zsh-theme-powerlevel10k-git zsh-autosuggestions zsh-syntax-highlighting
+```
+注：在arch不建议yay` + `oh-my-zsh混用，这样插件路径不一致，容易出错、不加载、难查错，最不推荐。使用的 `yay + zsh` 配置（不使用 oh-my-zsh）加载插件
+
+- 设置 Zsh 为默认 Shell，并运行zsh创建空白~/.zshrc
+
+```
+chsh -s /bin/zsh
+exec zsh
+```
+
+- 刷新配置
+
+```
 source ~/.zshrc
 ```
 
-[Ubuntu定制之换源 + VScode + JetBrains-Mono + zsh + powerlevel10k - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/537054661)
+使用如下文件配置.zshrc
+
+```
+# >>> Powerlevel10k instant prompt（必须靠前） <<<
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# >>> vscode shell 集成 <<<
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# >>> 基本设置 <<<
+export LANG=en_US.UTF-8
+export EDITOR=nano
+
+setopt HIST_IGNORE_DUPS
+setopt SHARE_HISTORY
+
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# 启动补全系统
+autoload -Uz compinit && compinit
+
+# >>> 自动建议插件 <<<
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=cyan'
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+# >>> Powerlevel10k 主题 <<<
+# 如果你不希望显示 git 状态信息可以保留下面两行
+POWERLEVEL9K_DISABLE_GITSTATUS=true
+POWERLEVEL10K_DISABLE_GITSTATUS=true
+
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# 如果有个性化配置
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# >>> 语法高亮插件（务必最后加载） <<<
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# >>> Micromamba 初始化 <<<
+export MAMBA_EXE='/usr/bin/micromamba'
+export MAMBA_ROOT_PREFIX='/home/sakura/.local/share/mamba'
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
+fi
+unset __mamba_setup
+
+# 替换 conda 命令（以 micromamba 执行）
+alias conda='micromamba'
+alias ca='conda activate'
+
+# >>> 解压函数 extract 与别名 <<<
+extract () {
+  if [ -f "$1" ] ; then
+    case "$1" in
+      *.tar.bz2)   tar xjf "$1"    ;;
+      *.tar.gz)    tar xzf "$1"    ;;
+      *.bz2)       bunzip2 "$1"    ;;
+      *.rar)       unrar x "$1"    ;;
+      *.gz)        gunzip "$1"     ;;
+      *.tar)       tar xf "$1"     ;;
+      *.tbz2)      tar xjf "$1"    ;;
+      *.tgz)       tar xzf "$1"    ;;
+      *.zip)       unzip "$1"      ;;
+      *.Z)         uncompress "$1" ;;
+      *.7z)        7z x "$1"       ;;
+      *)           echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+alias x='extract'
+```
 
 - 重新配置p10k
 
@@ -207,57 +538,45 @@ source ~/.zshrc
 ```text
 p10k configure
 ```
-## Arch Linux
-作为Linux发行版原神，以折腾为名，虽然老大仍然是debian系，声量在社区中不断增长，archwiki也很完善
-https://zhuanlan.zhihu.com/p/613738433
-### 安装appx
-https://github.com/yuk7/ArchWSL
-### 清华源（**也要tun模式才能连网络**）
-https://mirrors.tuna.tsinghua.edu.cn/help/archlinux/
-```
-pacman-key --lsign-key "farseerfc@archlinux.org"
-pacman -Syyu
-```
-#### 默认的pacman包管理
-```
-pacman -S fastfetch
-pacman -Rsu fastfetch #删除软件包及其依赖项
-pacman -Sc # 清除软件缓存，即 /var/cache/pacman/pkg 目录下的文件
-pacman -Syyu #更新系统上的所有软件包，包括更新系统
-pacman -Qqe #列出所有显式安装（-e,explicitly显式安装；-n忽略外部包AUR）
-```
-之后follow完善的wiki文档 https://wiki.archlinux.org/title/General_recommendations#System_administration 即可操作
-#### 终端ZSH与yay包管理
-**也可以先配置archlinuxcn的环境，然后直接pacman -S yay**
-https://zhuanlan.zhihu.com/p/494976862
-其中，安装yay来自动cmake构建github的包并融入到包体系中，之后安装zsh-theme-powerlevel10k-git
-```
-sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-yay -S --noconfirm zsh-theme-powerlevel10k-git
-echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
-```
-**以后的包都用yay接管**
+
+#### yay安装mamba
 
 ```
-yay -S fastfetch
-yay -Rsu fastfetch #删除软件包及其依赖项
-yay -Sc # 清除软件缓存，即 /var/cache/pacman/pkg 目录下的文件
-yay -Syyu #更新系统上的所有软件包，包括更新系统
-yay -Qqe #列出所有显式安装（-e,explicitly显式安装；-n忽略外部包AU
-yay 软件包名或搜索词 _# 从仓库和 AUR 中交互式搜索和安装软件包。_  
-yay _# 同步并更新所有来自仓库和 AUR 的软件包。后面不跟任何参数时，yay 会执行操作 yay -Syu，它会先调用 pacman 更新源的数据库、更新所有从源内安装的软件包，并检查你的 AUR 包有没有更新。_  
-yay -Sua _# 只同步和更新 AUR 软件包。_  
-yay -S 软件包名 _# 从仓库和 AUR 中安装一个新的软件包。_  
-yay -Ss 关键词 _# 从仓库和 AUR 中搜索软件包数据库中的关键词。_  
-yay -Ps _# 显示已安装软件包和系统健康状况的统计数据。_
+yay micromamba-bin # 安装aur版本，新版本更新及时
+micromamba shell init -s zsh
+```
+
+这样其实vscode也能识别创造出来的环境
+
+```
+conda create -n mnist python=3.12
+```
+
+调出vscode命令，然后select python interpreter就可以选择了、
+
+自更新mamba
+
+```
+sudo MAMBA_ROOT_PREFIX=/home/sakura/.local/share/mamba micromamba self-update
+```
+
+#### maple中文字体
+
+https://font.subf.dev/zh-cn/download/
+
+```
+yay -S ttf-maplemono-nf-cn-unhinted
+```
+
+#### fastfetch
+
+```
+yay fastfetch
 ```
 
 ## zsh 按tab显示补全提示，按 →直接补全所显示的
-## zsh更新
-```
-omz update
-```
-### Ubuntu清理
+
+## Ubuntu清理
 
 [ubuntu清理空间技巧 包含【系统日志、缓存、无用包、内核、VScode、conda、snap、pip】_sudo apt autoremove --purge snapd-CSDN博客](https://blog.csdn.net/m0_50181189/article/details/119855107)
 
@@ -289,8 +608,25 @@ sudo apt update
 source ~/.bashrc
 source ~/.zshrc
 ```
-## 软件安装
+## 软件安装,常用命令
+
+查看占用
+
+```
+du -sh /home/sakura/.local/share/mamba/envs
+du -h --max-depth=2 ~ | sort -hr
+```
+
+删除python相关cache
+
+```
+rm -rf ~/.cache/pip ~/.cache/uv
+```
+
+
+
 ### apt 安装
+
 ```bash
 sudo apt search package #搜索包 
 sudo apt show package #获取包的相关信息，如说明、大小、版本等  
@@ -318,10 +654,13 @@ sudo apt autoclean  #删除已经卸载的软件包备份
 sudo apt-get check #检查是否有损坏的依赖 
 ```
 
-### aptitude安装(跟灵活)
+### aptitude安装(更灵活)
+
 ```bash
 sudo apt install aptitude # 安装
-sudo aptitude update     更新可用的包列表
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt update    更新可用的包列表
 sudo aptitude upgrade    升级可用的包
 sudo aptitude dist-upgrade   将系统升级到新的发行版
 sudo aptitude install pkgname    安装包
@@ -336,7 +675,8 @@ sudo aptitude autoclean  仅删除过期的包文件
 
 看linux发行版信息
 ```sh
-wget https://github.com/fastfetch-cli/fastfetch/releases/download/2.11.5/fastfetch-linux-amd64.deb
+wget https://github.com/fastfetch-cli/fastfetch/releases/latest/download/fastfetch-linux-amd64.deb
+
 sudo apt install /home/sakura/fastfetch-linux-amd64.deb
 ```
 
@@ -564,5 +904,41 @@ cmake-3.29.1-linux-x86_64/share/cmake-3.29/Modules/Platform/Windows-NVIDIA-CUDA.
 这些是Microsoft Visual Studio 专用命令，linux没有
 
 # Docker
+
 dockerwindows使用linux
 优点：可以使用WSL，不用开启hyper-v
+
+## 虚拟机安装arch
+
+1. 下载iso镜像
+
+https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/2025.06.01/
+
+然后clash开tun模式以便连外网
+
+2. 进入，然后输入archinstall进行配置
+
+```
+archinstall
+```
+
+具体见https://zhuanlan.zhihu.com/p/25308291469
+
+3. vmware tools安装
+
+https://wiki.archlinuxcn.org/wiki/VMware/%E5%AE%89%E8%A3%85_Arch_Linux_%E4%B8%BA%E8%99%9A%E6%8B%9F%E6%9C%BA
+
+```
+sudo pacman -S open-vm-tools gtkmm3
+#启动服务 
+systemctl start vmtoolsd.service
+systemctl start vmware-vmblock-fuse.service
+#设置开机启动
+systemctl enable vmtoolsd.service
+systemctl enable vmware-vmblock-fuse.service
+#查询服务状态
+systemctl status vmtoolsd.service
+systemctl status vmware-vmblock-fuse.service
+```
+
+重启虚拟机
