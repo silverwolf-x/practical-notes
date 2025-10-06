@@ -38,3 +38,11 @@ https://github.com/microsoft/WSL2-Linux-Kernel
 }
 ```
 
+### linux安装docker
+
+https://docs.docker.com/engine/install/debian/
+
+
+
+
+
