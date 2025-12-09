@@ -341,3 +341,24 @@ trusted-host =
 以后执行pip命令，会自动依次查找每个源，如果在某个源中找到了需要安装的包，就会下载并安装。如果在所有源中都找不到包，就会提示找不到匹配的包。
 
 注：首选清华源，速度最快最稳定！
+
+但最好还是连接vpn免去清华源限速
+
+# python: uv
+
+## uv venv
+
+```
+uv venv -p
+```
+
+升级minor版本，截止20251101
+
+> Upgrades versions to the latest supported patch release. Requires the `python-upgrade` preview feature.
+>
+> https://docs.astral.sh/uv/reference/cli/#uv-python-upgrade
+
+```
+uv venv -p 3.13 --allow-existing
+```
+

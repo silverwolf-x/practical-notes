@@ -4,7 +4,9 @@
 
 关注命令的相关配置，即使用`python --help`、 `pandoc --help`
 
+## 面板panel（终端栏，下栏）对齐与覆盖
 
+鼠标到panel，右键，对齐面板，选择即可
 
 ## jupyter常用包安装
 
@@ -160,6 +162,10 @@ D:\Program Files\miniconda3\share\jupyter\nbconvert\templates\latex\index.tex.j2
 
     可以实现绘图IDE，查看dataframe。如果想用原生绘图，取消勾选即可
 
+## 最新方法
+
+python安装radian，然后终端输入radian即可
+
 ## 基本配置
 
 设置清华源
@@ -211,8 +217,31 @@ install.packages("rmdformats") # 可选rmdformat有好看的html
 
 - vscode加载web 视图，报错:“Error: Could not register serviceworkers: InvalidstateError: Failed to regist“
     关闭vscode，按WIN + R，输入cmd，打开终端，然后输入命令code --no-sandbox
+    
+- 多行粘贴失效： bracketedPaste 失效
 
-## shell
+    https://github.com/randy3k/radian/issues/320
+
+    
+
+## 更新r
+
+```R
+install.packages("installr")
+library(installr)
+updateR()
+```
+
+它会自动将旧R版本的包复制到最新的R版本里面，然后自己想卸软件一样卸旧R版本
+
+```
+update.packages(ask = FALSE, checkBuilt = TRUE)
+old.packages()
+```
+
+
+
+# shell
 
 >  借助git的bash，见shell.exe放入环境变量
 >

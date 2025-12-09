@@ -112,11 +112,14 @@ git push
 - **仓库删除model文件夹，改为release上传，避免git lfs爆免费额度**
 - **更新`README.md`表述**
 
-## 配置username useremail
+## 配置username useremail并查看config
 
 ```console
 git config user.name "silverwolf-x@Arch"
 git config user.email silverwolf-x@qq.com
+
+git config --global --edit
+git config --edit
 ```
 
 ## 合并
@@ -190,3 +193,66 @@ https://www.conventionalcommits.org/zh-hant/v1.0.0/
 
 https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/detaching-a-fork
 
+## 设置ssh签名verify
+
+1. 生成ed25519密钥
+
+   ```
+   $ ssh-keygen -t ed25519
+   ```
+
+   一直enter即可，默认生成在 `~/.ssh/id_ed25519`
+
+2. 复制公钥到github–setting–ssh里面，选择Authentication keys
+
+   ```
+   cat ~/.ssh/id_ed25519.pub
+   ```
+
+3. 验证
+
+   ```
+   ssh -T git@github.com
+   ```
+
+4. git config设置ssh签名验证
+
+   ```
+   git config --global gpg.format ssh
+   git config --global user.signingkey "$HOME/.ssh/id_ed25519.pub"
+   ```
+
+   检查配置
+
+   > 运行 `git config --global -l | findstr "gpg"` (`findstr` 是 Windows 命令, Linux/macOS用 `grep`)，确认你看到了：
+
+### github开启deploykey上传代码
+
+应用：针对特定repo有上传读写的权限
+
+和上述步骤一样，但上传到仓库 → **Settings → Deploy keys → Add deploy key**
+
+需要写权限，勾选 **Allow write access**
+
+> 注意：每个仓库的 Deploy Key 都是独立的，如果要推送到多个仓库，需要为每个仓库添加相应 Deploy Key。
+
+上传代码时提示*** Please tell me who you are.
+
+```
+git config user.name "Ucloud"
+git config user.email "ucloud@leviathan-quantlab.com"
+```
+
+因为这个email是虚拟的,对不上实际github的账户,因此是unverified
+
+### huggingface
+
+同理
+
+```
+ssh -T git@hf.co
+```
+
+##   若ssh -T连不上，添加known_host
+
+~/.ssh/known_host
