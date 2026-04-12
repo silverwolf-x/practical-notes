@@ -112,6 +112,23 @@ git push
 - **仓库删除model文件夹，改为release上传，避免git lfs爆免费额度**
 - **更新`README.md`表述**
 
+注意，如果想只追踪个别文件，无论放到哪个文件夹
+
+```
+如果 optimize 里真正想保留的只有 gold_vector_backtest.py 这一个文件，可以这样写：
+*
+!.gitignore
+!requirements.txt
+!show.ipynb
+!strategy.py
+
+# 针对 optimize 目录，先不忽略目录本身
+!optimize/
+
+# 只允许这个具体文件（路径相对根目录）
+!optimize/gold_vector_backtest.py
+```
+
 ## 配置username useremail并查看config
 
 ```console
@@ -256,3 +273,15 @@ ssh -T git@hf.co
 ##   若ssh -T连不上，添加known_host
 
 ~/.ssh/known_host
+
+## 本地强制同步远程
+
+git fetch origin && git reset --hard origin/main
+
+git fetch origin && git reset --hard origin/alpha
+
+## 申请学生认证
+
+用https://edu.chatgpt.org.uk/生成英语的学生证，然后用手机来定位并拍摄
+
+https://linux.do/t/topic/653825

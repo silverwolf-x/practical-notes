@@ -187,3 +187,18 @@ installed.packages()
 install.packages(old.packages())
 ```
 
+## 更新r
+
+```R
+install.packages("installr")
+library(installr)
+updateR()
+```
+
+它会自动将旧R版本的包复制到最新的R版本里面，然后自己卸软件一样卸旧R版本
+
+```
+update.packages(ask = FALSE, checkBuilt = TRUE)
+old.packages()
+```
+

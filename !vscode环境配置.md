@@ -324,3 +324,11 @@ deviceQuery
 
 ## TensorRT
 [TensorRT 10.x Download | NVIDIA Developer](https://developer.nvidia.com/tensorrt/download/10x)
+
+# github copilot
+
+设置-proxy设置代理，用ykk虚拟网卡规则-香港
+
+关闭“关闭连接时断掉内核”
+
+然后乞讨AI输出时稳定回复不要重连🙏
