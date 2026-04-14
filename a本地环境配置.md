@@ -157,6 +157,8 @@ tex-fmt基于rust快很多https://github.com/WGUNDERWOOD/tex-fmt?tab=readme-ov-f
 
 vscode中使用https://github.com/subframe7536/maple-font
 
+maple regular即可
+
 ```json
 "editor.unicodeHighlight.ambiguousCharacters": false,
 "editor.fontFamily": "Maple Mono NF CN, Jetbrains Mono, Menlo, Consolas, monospace",

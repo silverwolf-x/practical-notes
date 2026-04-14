@@ -5,6 +5,20 @@ date: 2026-04-14
 
 虽然可以在vscode可以直接按按钮，但一些基本的命令行和原理还是要掌握的
 
+## git config
+
+建议用github的noreply邮箱，见https://github.com/settings/emails
+
+104623550+silverwolf-x@users.noreply.github.com.
+
+```
+git config user.name "silverwolf-x"
+git config user.email 104623550+silverwolf-x@users.noreply.github.com.
+
+git config --global --edit
+git config --edit
+```
+
 ## git tag（vscode可以按按钮）
 
 git tag给某一次commit做一次静态标注。可以commit注释（我感觉最好不要加，保持commit都是代码修改引起的有效修改）。常用于git release发布版本（放置大文件到git release）
@@ -139,3 +153,14 @@ git branch -a  # 应显示 `main` 而非 `master`
 git remote show origin  # 查看 HEAD branch 是否为 `main`
 ```
 
+## 本地强制同步远程
+
+```
+git fetch origin && git reset --hard origin/main
+```
+
+## 申请学生认证
+
+用https://edu.chatgpt.org.uk/生成英语的学生证，然后用手机来定位并拍摄
+
+https://linux.do/t/topic/653825
