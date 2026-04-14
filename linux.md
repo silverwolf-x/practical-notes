@@ -187,7 +187,7 @@ sudo cp ~/sudoers /etc/sudoers
    取消注释这行后，`wheel` 组的用户可以在使用 `sudo` 时不输入密码，直接执行命令。
    
 
-**一般注释Wheel 就可以让所有用户都有sudo权限**
+   **一般注释Wheel 就可以让所有用户都有sudo权限**
 
 ### debian配置zsh终端
 
