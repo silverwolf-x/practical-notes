@@ -219,7 +219,7 @@ https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/workin
 1. 生成ed25519密钥
 
    ```
-   $ ssh-keygen -t ed25519
+   ssh-keygen -t ed25519
    ```
 
    一直enter即可，默认生成在 `~/.ssh/id_ed25519`
@@ -245,7 +245,7 @@ https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/workin
 
    检查配置
 
-   > 运行 `git config --global -l | findstr "gpg"` (`findstr` 是 Windows 命令, Linux/macOS用 `grep`)，确认你看到了：
+   > 运行 `` (`findstr` 是 Windows 命令, Linux/macOS用 `grep`)，确认你看到了：
 
 ### github开启deploykey上传代码
 

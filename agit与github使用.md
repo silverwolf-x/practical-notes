@@ -7,6 +7,8 @@ date: 2026-04-14
 
 ## git config
 
+### email
+
 建议用github的noreply邮箱，见https://github.com/settings/emails
 
 104623550+silverwolf-x@users.noreply.github.com.
@@ -17,6 +19,47 @@ git config user.email 104623550+silverwolf-x@users.noreply.github.com.
 
 git config --global --edit
 git config --edit
+```
+
+### 设置ssh签名verify
+
+| 维度                     | Authentication keys                 | Signing keys                          |
+| :----------------------- | :---------------------------------- | :------------------------------------ |
+| **主要目的**             | 验证“你是谁”，建立安全连接          | 验证“这个提交确实是你做的”            |
+| **使用场景**             | `git clone/push/pull`SSH 登录服务器 | `git commit` 时对提交内容进行数字签名 |
+| **验证对象**             | 你的**网络连接和访问权限**          | 你的**代码提交的真实性和完整性**      |
+| **是否每次操作都需用到** | 是（每次与服务器交互）              | 否（仅在创建签名提交时使用）          |
+| **密钥用途扩展**         | 可同时用于多个服务（如 Git、SFTP）  | 通常仅用于 Git 提交签名               |
+| **是否影响仓库历史**     | 否                                  | 是（签名会嵌入 commit 记录）          |
+
+1. 生成ed25519密钥
+
+   ```
+   ssh-keygen -t ed25519
+   ```
+
+   一直enter即可，默认生成在 `~/.ssh/id_ed25519`
+
+2. 复制公钥到github–setting–ssh里面，选择**Authentication keys**
+
+   ```
+   cat ~/.ssh/id_ed25519.pub
+   ```
+
+   验证
+
+   ```
+   ssh -T git@github.com
+   ```
+
+3. 重复上述流程部署SIgning keys
+
+​	git config设置ssh签名验证
+
+```
+git config --global gpg.format ssh
+git config --global user.signingkey "$HOME/.ssh/id_ed25519.pub"
+git config --global commit.gpgsign true
 ```
 
 ## git tag（vscode可以按按钮）
