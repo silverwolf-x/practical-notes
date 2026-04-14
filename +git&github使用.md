@@ -17,7 +17,7 @@ git tag给某一次commit做一次静态标注。可以commit注释。常用于g
 git tag -a v1.0.0 -m "Release version 1.0.0" 
 git push origin --tags # 推送本地所有tag
 ```
-删除标签
+删除标签（vscode可以按按钮）
 
 ```
 git tag -d {标签名}
@@ -130,6 +130,10 @@ git push
 ```
 
 ## 配置username useremail并查看config
+
+建议用github的noreply邮箱，见https://github.com/settings/emails
+
+104623550+silverwolf-x@users.noreply.github.com.
 
 ```console
 git config user.name "silverwolf-x@Arch"
